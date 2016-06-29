@@ -4,7 +4,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-double incompleteBeta(double x, double alpha, double beta) {
+double incompleteBeta_C(double x, double alpha, double beta) {
   //   int n = x.size();
   // NumericVector res(n);
   //

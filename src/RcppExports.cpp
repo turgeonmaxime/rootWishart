@@ -6,9 +6,9 @@
 
 using namespace Rcpp;
 
-// doubleWishart
-double doubleWishart(double x, int s, double m, double n);
-RcppExport SEXP rootWishart_doubleWishart(SEXP xSEXP, SEXP sSEXP, SEXP mSEXP, SEXP nSEXP) {
+// doubleWishart_C
+double doubleWishart_C(double x, int s, double m, double n);
+RcppExport SEXP rootWishart_doubleWishart_C(SEXP xSEXP, SEXP sSEXP, SEXP mSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -16,20 +16,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type s(sSEXP);
     Rcpp::traits::input_parameter< double >::type m(mSEXP);
     Rcpp::traits::input_parameter< double >::type n(nSEXP);
-    __result = Rcpp::wrap(doubleWishart(x, s, m, n));
+    __result = Rcpp::wrap(doubleWishart_C(x, s, m, n));
     return __result;
 END_RCPP
 }
-// incompleteBeta
-double incompleteBeta(double x, double alpha, double beta);
-RcppExport SEXP rootWishart_incompleteBeta(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
+// incompleteBeta_C
+double incompleteBeta_C(double x, double alpha, double beta);
+RcppExport SEXP rootWishart_incompleteBeta_C(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< double >::type x(xSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< double >::type beta(betaSEXP);
-    __result = Rcpp::wrap(incompleteBeta(x, alpha, beta));
+    __result = Rcpp::wrap(incompleteBeta_C(x, alpha, beta));
     return __result;
 END_RCPP
 }

@@ -7,7 +7,7 @@ using namespace Rcpp;
 using namespace Eigen;
 
 // [[Rcpp::export]]
-double doubleWishart(double x, int s, double m, double n) {
+double doubleWishart_C(double x, int s, double m, double n) {
     // Initialize vector
     VectorXd b(s);
     int d = s + (s % 2);
@@ -22,7 +22,7 @@ double doubleWishart(double x, int s, double m, double n) {
     if (s != d) {
         // Fill in extra column
         for (int i = 0; i < s; i++) {
-            A(i, s) = incompleteBeta(x, m + i + 1, n + 1);
+            A(i, s) = incompleteBeta_C(x, m + i + 1, n + 1);
             A(s, i) = - A(i, s);
         }
     }
@@ -30,11 +30,11 @@ double doubleWishart(double x, int s, double m, double n) {
 
     if (s != 1) {
         for (int i = 0; i < s; i++) {
-            b(i) = 0.5 * pow(incompleteBeta(x, m + i + 1, n + 1), 2);
+            b(i) = 0.5 * pow(incompleteBeta_C(x, m + i + 1, n + 1), 2);
 
             for (int j = i; j < (s-1); j++) {
-                b(j+1) = ((m+j+1)*b(j) - incompleteBeta(x, 2*m+i+j+2, 2*n+2))/(m+j+n+2);
-                A(i,j+1) = incompleteBeta(x, m+i+1, n+1) * incompleteBeta(x, m+j+2, n+1) -
+                b(j+1) = ((m+j+1)*b(j) - incompleteBeta_C(x, 2*m+i+j+2, 2*n+2))/(m+j+n+2);
+                A(i,j+1) = incompleteBeta_C(x, m+i+1, n+1) * incompleteBeta_C(x, m+j+2, n+1) -
                     2*b(j+1);
                 A(j+1, i) = - A(i, j+1);
             }

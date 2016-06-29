@@ -1,45 +1,44 @@
-# Chiani 2016 iterative algorithm----
-# Incomplete Beta function
-incompleteBeta <- function(x, alpha, beta) {
-    pbeta(x, shape1 = alpha, shape2 = beta) * exp(lgamma(alpha) + lgamma(beta) - lgamma(alpha + beta))
+#' Incomplete beta function
+#'
+#' Computes the incomplete beta function.
+#'
+#' This is defined as the integral from 0 to \code{x} of the function
+#' \code{t^(a-1)(1-t)^(b-1)}.
+#'
+#' @param x Value between 0 and 1 at which to evaluate the incomplete beta
+#'   function.
+#' @param a non-negative numeric
+#' @param b non-negative numeric
+#' @return Returns the value of the incomplete beta function at x.
+#' @export
+incompleteBeta <- function(x, a, b){
+    if(any(c(length(x), length(a), length(b)) != 1)) {
+        stop("None of the parameters can be vectors of length > 1", call. = FALSE)
+    }
+    stopifnot(x >= 0, x <= 1, a >= 0, b >= 0)
+
+    # Special cases
+    if(a == 0 || b == 0) {
+        val <- Inf
+    } else {
+        if(x == 0) val <- 0
+        if(x == 1) val <- beta(a, b)
+        if(x > 0 && x < 1) val <- incompleteBeta_C(x, alpha = a, beta = b)
+    }
+
+    return(val)
 }
 
-# CDF computation
-pRoy <- function(x, s, m, n) {
-    # Initialize matrix
-    A <- matrix(0, s, s)
-    b <- rep_len(0, s)
-
-    if (s != 1) {
-        for (i in 1:(s-1)) {
-            b[i] <- 0.5*incompleteBeta(x, m + i, n + 1)^2
-            for (j in i:(s-1)) {
-                b[j+1] <- ((m+j)*b[j] - incompleteBeta(x, 2*m+i+j, 2*n+2))/(m+j+n+1)
-                A[i,j+1] <- incompleteBeta(x, m+i, n+1) * incompleteBeta(x, m+j+1, n+1) -
-                    2*b[j+1]
-            }
-        }
-    }
-
-    if (s %% 2) {
-        A <- rbind(A, 0)
-        extraCol <- rep_len(0, s+1)
-        for (i in 1:s) {
-            extraCol[i] <- incompleteBeta(x, m+i, n+1)
-        }
-        A <- cbind(A, extraCol)
-    }
-    A <- A - t(A)
-
-    # Compute scaling constant
-    c1 <- 0.5*(1:s+2*m+2*n+s+2)
-    c2 <- 0.5*(1:s)
-    c3 <- 0.5*(1:s+2*m+1)
-    c4 <- 0.5*(1:s+2*n+1)
-
-    C <- pi^(0.5*s) * exp(sum(lgamma(c1) - lgamma(c2) -
-                                  lgamma(c3) - lgamma(c4)))
-
-    result <- C * sqrt(abs(det(A)))
-    return(result)
+#' Distribution of the largest root
+#'
+#' Computes the cumulative distribution function of the largest root in the single and double Wishart setting.
+#'
+#' @param x Value at which to compute the CDF.
+#' @param s,m,n Parameters of the problem. See Details.
+#' @return Returns the value of the CDF at \code{x}.
+#' @export
+#' @aliases doubleWishart singleWishart
+#' @rdname largestRoot
+doubleWishart <- function(x, s, m, n) {
+    doubleWishart_C(x, s, m, n)
 }

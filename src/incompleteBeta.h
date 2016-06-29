@@ -1,3 +1,1 @@
-#include <Rcpp.h>
-
-double incompleteBeta(double x, double alpha, double beta);
+double incompleteBeta_C(double x, double alpha, double beta);
