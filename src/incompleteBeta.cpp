@@ -4,12 +4,14 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-NumericVector incompleteBeta(NumericVector x, double alpha, double beta) {
-    int n = x.size();
-  NumericVector res(n);
+double incompleteBeta(double x, double alpha, double beta) {
+  //   int n = x.size();
+  // NumericVector res(n);
+  //
+  // for (int i =0; i < n; i++) {
+  //     res[i] = R::pbeta(x[i], alpha, beta, 1, 0) * exp(R::lgammafn(alpha) + R::lgammafn(beta) - R::lgammafn(alpha + beta));
+  // }
 
-  for (int i =0; i < n; i++) {
-      res[i] = R::pbeta(x[i], alpha, beta, 1, 0) * exp(R::lgammafn(alpha) + R::lgammafn(beta) - R::lgammafn(alpha + beta));
-  }
+  double res = R::pbeta(x, alpha, beta, 1, 0) * exp(R::lgammafn(alpha) + R::lgammafn(beta) - R::lgammafn(alpha + beta));
   return res;
 }
