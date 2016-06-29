@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 #include <Eigen/Dense>
+#include <Eigen/LU>
 #include "incompleteBeta.h"
 
 using namespace Rcpp;
@@ -48,7 +49,14 @@ double doubleWishart(double x, int s, double m, double n) {
     }
     double C = pow(M_PI, 0.5 * s) * exp(C1);
 
-    double result = C * sqrt(A.determinant());
+    double det;
+    if(d > 4) {
+        det = A.fullPivLu().determinant();
+    } else {
+        det = A.determinant();
+    }
+
+    double result = C * sqrt(det);
     return result;
 
 }
