@@ -5,7 +5,15 @@ doubleWishart_C <- function(x, s, m, n) {
     .Call('rootWishart_doubleWishart_C', PACKAGE = 'rootWishart', x, s, m, n)
 }
 
+singleWishart_C <- function(x, n_min, n_max) {
+    .Call('rootWishart_singleWishart_C', PACKAGE = 'rootWishart', x, n_min, n_max)
+}
+
 incompleteBeta_C <- function(x, alpha, beta) {
     .Call('rootWishart_incompleteBeta_C', PACKAGE = 'rootWishart', x, alpha, beta)
+}
+
+mgamma_C <- function(x, m, logar) {
+    .Call('rootWishart_mgamma_C', PACKAGE = 'rootWishart', x, m, logar)
 }
 

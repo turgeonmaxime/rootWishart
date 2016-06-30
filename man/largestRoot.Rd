@@ -6,11 +6,15 @@
 \title{Distribution of the largest root}
 \usage{
 doubleWishart(x, s, m, n)
+
+singleWishart(x, n_min, n_max)
 }
 \arguments{
 \item{x}{Value at which to compute the CDF.}
 
-\item{s, m, n}{Parameters of the problem. See Details.}
+\item{s, m, n}{Parameters of the double Wishart setting. See Details.}
+
+\item{n_min, n_max}{Parameters of the single Wishart setting. See details.}
 }
 \value{
 Returns the value of the CDF at \code{x}.

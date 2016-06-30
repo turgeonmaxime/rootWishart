@@ -2,5 +2,6 @@
 
 export(doubleWishart)
 export(incompleteBeta)
+export(singleWishart)
 importFrom(Rcpp,sourceCpp)
 useDynLib(rootWishart)

@@ -46,3 +46,65 @@ pRoy <- function(x, s, m, n) {
     result <- C * sqrt(abs(det(A)))
     return(result)
 }
+
+# Multivariate Gamma function
+Gm_ <- function(x, m, log = FALSE) {
+    if(log) {
+        val <- 0.25*m*(m-1)*log(pi) + sum(lgamma(x - 0.5*0:(m-1)))
+    } else {
+        val <- pi^(0.25*m*(m-1))*prod(gamma(x - 0.5*0:(m-1)))
+    }
+    return(val)
+}
+
+#function to calculate CDF of the largest root of Wishart matrix
+lrgWishart3<- function(x, nmin, nmax){
+    if ((nmin/2)==round(nmin/2)){
+        A <- matrix(0, nmin, nmin)
+        nmat<-nmin
+    } else {
+        A <- matrix(0, nmin+1, nmin+1)
+        nmat <- nmin+1
+    }
+    alph <- (nmax-nmin-1)/2
+    b <- rep(0, nmin)
+
+    Klog <- sum(c(0.5*nmin^2*log(pi) - 0.5*nmin*nmax*log(2),
+                          -Gm_(nmin, nmax/2, log=TRUE) , - Gm_(nmin, nmin/2, log=TRUE)))
+    Kplog <- Klog + (alph*nmat+0.5*nmat*(nmat+1))*log(2) +
+        sum(lgamma(alph+(1:nmat)))
+    Llog<-Kplog*(2/nmat)
+    L = exp(Kplog*(2/nmat))
+
+    p <- pgamma(x/2, alph+(1:nmin))
+    glog<-lgamma(alph+(1:nmin))
+    qlog<-(log(2)*(-(2*alph+(1:(2*nmin-1))))+lgamma(2*alph+(1:(2*nmin-1)))+
+               pgamma(x, 2*alph+(1:(2*nmin-1)), x, log.p = TRUE))
+
+    for (i in (1:(nmin-1))){
+        b[i] <- (p[i]^2)/2
+        for (j in i:(nmin-1)){
+            b[j+1] <- b[j] - exp(qlog[i+j]-(glog[i]+glog[j+1]))
+            A[i, j+1] = p[i]*p[j+1] - 2*b[j+1]
+        }
+    }
+
+    if ((nmin/2)!=round(nmin/2)){
+        alphi <- alph+(1:nmin)
+        logLastcol<-log(2)*(-alph-nmin-1)+pgamma(x/2, alphi,
+                                                 log.p = TRUE)-lgamma(alph+nmin+1)
+        minlogLastcol<-min(logLastcol)
+        B<-A
+        B[1:nmin,nmin+1]<-exp(logLastcol-minlogLastcol)
+
+        B <- B - t(B);
+        logdet <- nmat*Llog+2*minlogLastcol+as.numeric(determinant(B)$modulus)
+        return(list('F'= exp(logdet/2), 'A'=B))
+    }
+
+    A <- A - t(A)
+    return(list('F'= exp(Kplog + log(0.5) + as.numeric(determinant(A)$modulus)), 'A'=A))
+}
+
+lrgWishart3(25, 8, 13)$F
+

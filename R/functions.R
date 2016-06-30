@@ -34,11 +34,18 @@ incompleteBeta <- function(x, a, b){
 #' Computes the cumulative distribution function of the largest root in the single and double Wishart setting.
 #'
 #' @param x Value at which to compute the CDF.
-#' @param s,m,n Parameters of the problem. See Details.
+#' @param s,m,n Parameters of the double Wishart setting. See Details.
 #' @return Returns the value of the CDF at \code{x}.
 #' @export
 #' @aliases doubleWishart singleWishart
 #' @rdname largestRoot
 doubleWishart <- function(x, s, m, n) {
     doubleWishart_C(x, s, m, n)
+}
+
+#' @param n_min,n_max Parameters of the single Wishart setting. See details.
+#' @export
+#' @rdname largestRoot
+singleWishart <- function(x, n_min, n_max) {
+    singleWishart_C(x, n_min, n_max)
 }

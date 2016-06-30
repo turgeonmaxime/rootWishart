@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 #include <Eigen/Dense>
 #include <Eigen/LU>
-#include "incompleteBeta.h"
+#include "utility.h"
 
 using namespace Rcpp;
 using namespace Eigen;
