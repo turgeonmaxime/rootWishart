@@ -48,7 +48,7 @@ pRoy <- function(x, s, m, n) {
 }
 
 # Multivariate Gamma function
-Gm_ <- function(x, m, log = FALSE) {
+Gm_2 <- function(x, m, log = FALSE) {
     if(log) {
         val <- 0.25*m*(m-1)*log(pi) + sum(lgamma(x - 0.5*0:(m-1)))
     } else {
@@ -57,29 +57,37 @@ Gm_ <- function(x, m, log = FALSE) {
     return(val)
 }
 
+Gm_ <- function(m,a, log=FALSE){
+    if (!log){
+        return(pi^(m*(m-1)/4)*Reduce('*',  zipfR::Cgamma(a - ((1:m)-1)/2 )))} else {
+            return(log(pi^(m*(m-1)/4)) + Reduce('+',  zipfR::Cgamma(a -
+                                                                 ((1:m)-1)/2, log=TRUE)) )
+        }
+}
+
 #function to calculate CDF of the largest root of Wishart matrix
-lrgWishart3<- function(x, nmin, nmax){
+lrgWishart3<- function(nmin,nmax, x){
     if ((nmin/2)==round(nmin/2)){
-        A <- matrix(0, nmin, nmin)
+        A=matrix(0, nmin, nmin)
         nmat<-nmin
     } else {
-        A <- matrix(0, nmin+1, nmin+1)
-        nmat <- nmin+1
+        A=matrix(0, nmin+1, nmin+1)
+        nmat<-nmin+1
     }
-    alph <- (nmax-nmin-1)/2
+    alph<-(nmax-nmin-1)/2
     b <- rep(0, nmin)
 
-    Klog <- sum(c(0.5*nmin^2*log(pi) - 0.5*nmin*nmax*log(2),
-                          -Gm_(nmin, nmax/2, log=TRUE) , - Gm_(nmin, nmin/2, log=TRUE)))
-    Kplog <- Klog + (alph*nmat+0.5*nmat*(nmat+1))*log(2) +
-        sum(lgamma(alph+(1:nmat)))
+    Klog = Reduce('+', c(((nmin^2)/2)*log(pi) - (nmin*nmax/2)*log(2),
+                         -Gm_(nmin, nmax/2, log=T) , -Gm_(nmin, nmin/2, log=T)))
+    Kplog = Klog + (alph*nmat+nmat*(nmat+1)/2)*log(2) + Reduce('+',
+                                                               zipfR::Cgamma(alph+(1:nmat), log=T))
     Llog<-Kplog*(2/nmat)
     L = exp(Kplog*(2/nmat))
 
-    p <- pgamma(x/2, alph+(1:nmin))
-    glog<-lgamma(alph+(1:nmin))
-    qlog<-(log(2)*(-(2*alph+(1:(2*nmin-1))))+lgamma(2*alph+(1:(2*nmin-1)))+
-               pgamma(x, 2*alph+(1:(2*nmin-1)), x, log.p = TRUE))
+    p<-zipfR::Rgamma(alph+(1:nmin), x/2);
+    glog<-zipfR::Cgamma(alph+(1:nmin), log=T)
+    qlog<-(log(2)*(-(2*alph+(1:(2*nmin-1))))+zipfR::Cgamma(2*alph+(1:(2*nmin-1)),
+                                                    log=T)+zipfR::Rgamma(2*alph+(1:(2*nmin-1)), x, log=T))
 
     for (i in (1:(nmin-1))){
         b[i] <- (p[i]^2)/2
@@ -91,20 +99,18 @@ lrgWishart3<- function(x, nmin, nmax){
 
     if ((nmin/2)!=round(nmin/2)){
         alphi <- alph+(1:nmin)
-        logLastcol<-log(2)*(-alph-nmin-1)+pgamma(x/2, alphi,
-                                                 log.p = TRUE)-lgamma(alph+nmin+1)
+        logLastcol<-log(2)*(-alph-nmin-1)+zipfR::Rgamma(alphi, x/2,
+                                                 log=T)-zipfR::Cgamma(alph+nmin+1, log=T)
         minlogLastcol<-min(logLastcol)
         B<-A
         B[1:nmin,nmin+1]<-exp(logLastcol-minlogLastcol)
 
         B <- B - t(B);
-        logdet <- nmat*Llog+2*minlogLastcol+as.numeric(determinant(B)$modulus)
+        logdet <- nmat*Llog+2*minlogLastcol+log(det(B))
         return(list('F'= exp(logdet/2), 'A'=B))
     }
 
     A <- A - t(A)
-    return(list('F'= exp(Kplog + log(0.5) + as.numeric(determinant(A)$modulus)), 'A'=A))
+    return(list('F'= exp(Kplog + log(det(A))/2), 'A'=A))
 }
-
-lrgWishart3(25, 8, 13)$F
 

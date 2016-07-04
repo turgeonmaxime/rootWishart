@@ -27,7 +27,7 @@ double mgamma_C(double x, int m, bool logar) {
             res += R::lgammafn(x - 0.5*i);
         }
     } else {
-        res = pow(M_PI, 0.25*m/(m-1));
+        res = pow(M_PI, 0.25*m*(m-1));
         for(int i = 0; i < m; i++) {
             res *= R::gammafn(x - 0.5*i);
         }
