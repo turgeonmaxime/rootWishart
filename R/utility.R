@@ -1,4 +1,5 @@
 # Error function
+#' @importFrom stats pnorm
 erf <- function(x) 2*pnorm(sqrt(2)*x) - 1
 
 # Special cases for single Wishart

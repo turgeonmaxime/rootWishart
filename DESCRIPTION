@@ -17,4 +17,5 @@ LazyData: true
 NeedsCompilation: yes
 RoxygenNote: 5.0.1
 LinkingTo: Rcpp, RcppEigen
-Imports: Rcpp
+Imports: Rcpp,
+    zipfR
