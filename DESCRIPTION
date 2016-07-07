@@ -9,6 +9,7 @@ Description: This package computes the distribution function of the largest root
     results by Chiani (Journal of Multivariate Statistics 2014 and 2016). They
     use the fact that the CDF is related to the Pfaffian of a matrix that can be
     computed in a finite number of iterations.
+SystemRequirements: gmp (>= 4.2.3), mpfr (>= 3.0.0)
 Depends:
     R (>= 3.0.0)
 License: GPL (>= 2)
