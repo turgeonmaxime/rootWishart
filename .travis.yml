@@ -1,8 +1,12 @@
 language: r
 sudo: required
 
+apt_packages:
+  - libmpfr-dev
+
 r_binary_packages:
-  - knitr
+  - Rcpp
+  - RcppEigen
 
 notifications:
   email:
