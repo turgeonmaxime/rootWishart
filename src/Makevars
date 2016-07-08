@@ -2,5 +2,6 @@
 
 # Link with GMP  (GNU Multiple Precision)
 # and  with MPFR (Multiple Precision Floating point Reliable) Libraries
-#
+
 PKG_LIBS = -lmpfr -lgmp
+CXX_STD = CXX11
