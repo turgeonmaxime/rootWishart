@@ -7,7 +7,7 @@
 \usage{
 doubleWishart(x, s, m, n)
 
-singleWishart(x, n_min, n_max)
+singleWishart(x, n_min, n_max, mprec = TRUE)
 }
 \arguments{
 \item{x}{Value at which to compute the CDF.}
@@ -15,6 +15,8 @@ singleWishart(x, n_min, n_max)
 \item{s, m, n}{Parameters of the double Wishart setting. See Details.}
 
 \item{n_min, n_max}{Parameters of the single Wishart setting. See details.}
+
+\item{mprec}{Logical. Should we use gmp for high precision computations?}
 }
 \value{
 Returns the value of the CDF at \code{x}.

@@ -44,6 +44,7 @@ doubleWishart <- function(x, s, m, n) {
 }
 
 #' @param n_min,n_max Parameters of the single Wishart setting. See details.
+#' @param mprec Logical. Should we use gmp for high precision computations?
 #' @export
 #' @rdname largestRoot
 singleWishart <- function(x, n_min, n_max, mprec = TRUE) {
