@@ -5,6 +5,10 @@ doubleWishart_C <- function(x, s, m, n) {
     .Call('rootWishart_doubleWishart_C', PACKAGE = 'rootWishart', x, s, m, n)
 }
 
+singleWishart_mpfr <- function(xx, n_min, n_max) {
+    .Call('rootWishart_singleWishart_mpfr', PACKAGE = 'rootWishart', xx, n_min, n_max)
+}
+
 singleWishart_C <- function(x, n_min, n_max) {
     .Call('rootWishart_singleWishart_C', PACKAGE = 'rootWishart', x, n_min, n_max)
 }

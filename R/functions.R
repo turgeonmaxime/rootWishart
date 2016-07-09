@@ -46,21 +46,25 @@ doubleWishart <- function(x, s, m, n) {
 #' @param n_min,n_max Parameters of the single Wishart setting. See details.
 #' @export
 #' @rdname largestRoot
-singleWishart <- function(x, n_min, n_max) {
-    # There are some special cases
-    specialCases <- list(c(2,2),
-                         c(2,5),
-                         c(3,3),
-                         c(4,4))
-    if(any(vapply(specialCases,
-                  function(pair) all(pair == c(n_min, n_max)),
-                  logical(1)))) {
-        if (all(c(n_min, n_max) == c(2,2))) result <- F22(x)
-        if (all(c(n_min, n_max) == c(2,5))) result <- F25(x)
-        if (all(c(n_min, n_max) == c(3,3))) result <- F33(x)
-        if (all(c(n_min, n_max) == c(4,4))) result <- F44(x)
+singleWishart <- function(x, n_min, n_max, mprec = TRUE) {
+    if (mprec) {
+        result <- singleWishart_mpfr(x, n_min, n_max)
     } else {
-        result <- singleWishart_C(x, n_min, n_max)
+        # There are some special cases
+        specialCases <- list(c(2,2),
+                             c(2,5),
+                             c(3,3),
+                             c(4,4))
+        if(any(vapply(specialCases,
+                      function(pair) all(pair == c(n_min, n_max)),
+                      logical(1)))) {
+            if (all(c(n_min, n_max) == c(2,2))) result <- F22(x)
+            if (all(c(n_min, n_max) == c(2,5))) result <- F25(x)
+            if (all(c(n_min, n_max) == c(3,3))) result <- F33(x)
+            if (all(c(n_min, n_max) == c(4,4))) result <- F44(x)
+        } else {
+            result <- singleWishart_C(x, n_min, n_max)
+        }
     }
 
     return(result)

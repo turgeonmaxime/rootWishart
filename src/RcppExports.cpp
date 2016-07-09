@@ -20,6 +20,19 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// singleWishart_mpfr
+double singleWishart_mpfr(double xx, int n_min, int n_max);
+RcppExport SEXP rootWishart_singleWishart_mpfr(SEXP xxSEXP, SEXP n_minSEXP, SEXP n_maxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< double >::type xx(xxSEXP);
+    Rcpp::traits::input_parameter< int >::type n_min(n_minSEXP);
+    Rcpp::traits::input_parameter< int >::type n_max(n_maxSEXP);
+    __result = Rcpp::wrap(singleWishart_mpfr(xx, n_min, n_max));
+    return __result;
+END_RCPP
+}
 // singleWishart_C
 double singleWishart_C(double x, int n_min, int n_max);
 RcppExport SEXP rootWishart_singleWishart_C(SEXP xSEXP, SEXP n_minSEXP, SEXP n_maxSEXP) {
