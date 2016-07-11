@@ -9,8 +9,8 @@ incomplete_beta <- function(x, a, b) {
     .Call('rootWishart_incomplete_beta', PACKAGE = 'rootWishart', x, a, b)
 }
 
-doubleWishart_mp <- function(x, s, m, n) {
-    .Call('rootWishart_doubleWishart_mp', PACKAGE = 'rootWishart', x, s, m, n)
+doubleWishart_raw <- function(x, s, m, n, mp) {
+    .Call('rootWishart_doubleWishart_raw', PACKAGE = 'rootWishart', x, s, m, n, mp)
 }
 
 singleWishart_mpfr <- function(xx, n_min, n_max) {

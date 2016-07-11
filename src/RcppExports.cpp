@@ -33,9 +33,9 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// doubleWishart_mp
-double doubleWishart_mp(double x, int s, double m, double n);
-RcppExport SEXP rootWishart_doubleWishart_mp(SEXP xSEXP, SEXP sSEXP, SEXP mSEXP, SEXP nSEXP) {
+// doubleWishart_raw
+double doubleWishart_raw(double x, int s, double m, double n, bool mp);
+RcppExport SEXP rootWishart_doubleWishart_raw(SEXP xSEXP, SEXP sSEXP, SEXP mSEXP, SEXP nSEXP, SEXP mpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -43,7 +43,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type s(sSEXP);
     Rcpp::traits::input_parameter< double >::type m(mSEXP);
     Rcpp::traits::input_parameter< double >::type n(nSEXP);
-    __result = Rcpp::wrap(doubleWishart_mp(x, s, m, n));
+    Rcpp::traits::input_parameter< bool >::type mp(mpSEXP);
+    __result = Rcpp::wrap(doubleWishart_raw(x, s, m, n, mp));
     return __result;
 END_RCPP
 }
