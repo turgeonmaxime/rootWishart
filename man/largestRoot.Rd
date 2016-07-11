@@ -5,7 +5,7 @@
 \alias{singleWishart}
 \title{Distribution of the largest root}
 \usage{
-doubleWishart(x, s, m, n)
+doubleWishart(x, s, m, n, mprec = TRUE)
 
 singleWishart(x, n_min, n_max, mprec = TRUE)
 }
@@ -14,9 +14,9 @@ singleWishart(x, n_min, n_max, mprec = TRUE)
 
 \item{s, m, n}{Parameters of the double Wishart setting. See Details.}
 
-\item{n_min, n_max}{Parameters of the single Wishart setting. See details.}
-
 \item{mprec}{Logical. Should we use gmp for high precision computations?}
+
+\item{n_min, n_max}{Parameters of the single Wishart setting. See details.}
 }
 \value{
 Returns the value of the CDF at \code{x}.
