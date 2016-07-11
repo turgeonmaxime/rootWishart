@@ -61,7 +61,7 @@ T doubleWishart(T xx, int s, T mm, T nn) {
         C1 += boost::math::lgamma(0.5*(i+2*mm+2*nn+s+2)) - boost::math::lgamma(0.5*i) -
             boost::math::lgamma(0.5*(i+2*mm+1)) - boost::math::lgamma(0.5*(i+2*nn+1));
     }
-    T C = pow(pi<mp_float>(), 0.5 * s) * exp(C1);
+    T C = pow(pi<T>(), 0.5 * s) * exp(C1);
 
     T det;
     if(d > 4) {

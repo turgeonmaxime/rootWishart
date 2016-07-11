@@ -5,10 +5,6 @@ doubleWishart_C <- function(x, s, m, n) {
     .Call('rootWishart_doubleWishart_C', PACKAGE = 'rootWishart', x, s, m, n)
 }
 
-incomplete_beta <- function(x, a, b) {
-    .Call('rootWishart_incomplete_beta', PACKAGE = 'rootWishart', x, a, b)
-}
-
 doubleWishart_raw <- function(x, s, m, n, mp) {
     .Call('rootWishart_doubleWishart_raw', PACKAGE = 'rootWishart', x, s, m, n, mp)
 }
@@ -17,8 +13,8 @@ singleWishart_mpfr <- function(xx, n_min, n_max) {
     .Call('rootWishart_singleWishart_mpfr', PACKAGE = 'rootWishart', xx, n_min, n_max)
 }
 
-singleWishart_C <- function(x, n_min, n_max) {
-    .Call('rootWishart_singleWishart_C', PACKAGE = 'rootWishart', x, n_min, n_max)
+singleWishart_raw <- function(x, n_min, n_max, mp) {
+    .Call('rootWishart_singleWishart_raw', PACKAGE = 'rootWishart', x, n_min, n_max, mp)
 }
 
 incompleteBeta_C <- function(x, alpha, beta) {
