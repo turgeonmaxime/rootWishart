@@ -10,8 +10,7 @@ Description: Functions for hypothesis testing in single and double Wishart
     that the CDF is related to the Pfaffian of a matrix that can be computed in
     a finite number of iterations. This package takes advantage of the Boost and
     Eigen C++ libraries to perform multi-precision linear algebra.
-Depends:
-    R (>= 3.1.0)
+Depends: R (>= 3.1.0)
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
