@@ -6,9 +6,9 @@
 
 using namespace Rcpp;
 
-// doubleWishart_C
-double doubleWishart_C(double x, int s, double m, double n);
-RcppExport SEXP rootWishart_doubleWishart_C(SEXP xSEXP, SEXP sSEXP, SEXP mSEXP, SEXP nSEXP) {
+// doubleWishart_raw
+double doubleWishart_raw(double x, int s, double m, double n, bool mp);
+RcppExport SEXP rootWishart_doubleWishart_raw(SEXP xSEXP, SEXP sSEXP, SEXP mSEXP, SEXP nSEXP, SEXP mpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -16,59 +16,22 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type s(sSEXP);
     Rcpp::traits::input_parameter< double >::type m(mSEXP);
     Rcpp::traits::input_parameter< double >::type n(nSEXP);
-    __result = Rcpp::wrap(doubleWishart_C(x, s, m, n));
+    Rcpp::traits::input_parameter< bool >::type mp(mpSEXP);
+    __result = Rcpp::wrap(doubleWishart_raw(x, s, m, n, mp));
     return __result;
 END_RCPP
 }
-// singleWishart_mpfr
-double singleWishart_mpfr(double xx, int n_min, int n_max);
-RcppExport SEXP rootWishart_singleWishart_mpfr(SEXP xxSEXP, SEXP n_minSEXP, SEXP n_maxSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< double >::type xx(xxSEXP);
-    Rcpp::traits::input_parameter< int >::type n_min(n_minSEXP);
-    Rcpp::traits::input_parameter< int >::type n_max(n_maxSEXP);
-    __result = Rcpp::wrap(singleWishart_mpfr(xx, n_min, n_max));
-    return __result;
-END_RCPP
-}
-// singleWishart_C
-double singleWishart_C(double x, int n_min, int n_max);
-RcppExport SEXP rootWishart_singleWishart_C(SEXP xSEXP, SEXP n_minSEXP, SEXP n_maxSEXP) {
+// singleWishart_raw
+double singleWishart_raw(double x, int n_min, int n_max, bool mp);
+RcppExport SEXP rootWishart_singleWishart_raw(SEXP xSEXP, SEXP n_minSEXP, SEXP n_maxSEXP, SEXP mpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< double >::type x(xSEXP);
     Rcpp::traits::input_parameter< int >::type n_min(n_minSEXP);
     Rcpp::traits::input_parameter< int >::type n_max(n_maxSEXP);
-    __result = Rcpp::wrap(singleWishart_C(x, n_min, n_max));
-    return __result;
-END_RCPP
-}
-// incompleteBeta_C
-double incompleteBeta_C(double x, double alpha, double beta);
-RcppExport SEXP rootWishart_incompleteBeta_C(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< double >::type beta(betaSEXP);
-    __result = Rcpp::wrap(incompleteBeta_C(x, alpha, beta));
-    return __result;
-END_RCPP
-}
-// mgamma_C
-double mgamma_C(double x, int m, bool logar);
-RcppExport SEXP rootWishart_mgamma_C(SEXP xSEXP, SEXP mSEXP, SEXP logarSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    Rcpp::traits::input_parameter< int >::type m(mSEXP);
-    Rcpp::traits::input_parameter< bool >::type logar(logarSEXP);
-    __result = Rcpp::wrap(mgamma_C(x, m, logar));
+    Rcpp::traits::input_parameter< bool >::type mp(mpSEXP);
+    __result = Rcpp::wrap(singleWishart_raw(x, n_min, n_max, mp));
     return __result;
 END_RCPP
 }
