@@ -4,7 +4,6 @@ sudo: required
 r_binary_packages:
   - Rcpp
   - RcppEigen
-  - BH
 
 notifications:
   email:
