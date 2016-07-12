@@ -19,7 +19,7 @@ template <class T>
 T mgamma_C(T, int, bool);
 
 template <class T>
-T singleWishart(T xx, int n_max, int n_min) {
+T singleWishart_pfaffian(T xx, int n_max, int n_min) {
     // Declare vector types with multi-precision scalar type
     typedef Eigen::Matrix<T,Dynamic,1> VectorXmp;
 
@@ -64,14 +64,7 @@ T singleWishart(T xx, int n_max, int n_min) {
             A(i, j+1) = p(i)*p(j+1) - 2*b;
             A(j+1, i) = -A(i, j+1);
         }
-    }
-
-    // Compute constant
-    T K1 = pow(pi<T>(), 0.5*n_min*n_min);
-    K1 /= pow(2, 0.5*n_min*n_max)*mgamma_C(0.5*n_max, n_min, FALSE)*mgamma_C(0.5*n_min, n_min, FALSE);
-    T K2 = pow(2, alpha*n_mat+0.5*n_mat*(n_mat+1));
-    for (int k = 0; k < n_mat; k++) {
-        K2 *= boost::math::tgamma(alpha + k + 1);
+        Rcpp::checkUserInterrupt();
     }
 
     // Compute Pfaffian
@@ -81,19 +74,54 @@ T singleWishart(T xx, int n_max, int n_min) {
     } else {
         det = A.determinant();
     }
+    return sqrt(det);
+}
 
-    T result = K1 * K2 * sqrt(det);
-    return result;
+double singleWishart_constDP(int n_min, int n_max) {
+    int n_mat = n_min + (n_min % 2);
+    double alpha = 0.5*(n_max - n_min - 1);
+    // Compute constant
+    double K1 = pow(M_PI, 0.5*n_min*n_min);
+    K1 /= pow(2, 0.5*n_min*n_max)*mgamma_C(0.5*n_max, n_min, FALSE)*mgamma_C(0.5*n_min, n_min, FALSE);
+    double K2 = pow(2, alpha*n_mat+0.5*n_mat*(n_mat+1));
+    for (int k = 0; k < n_mat; k++) {
+        K2 *= boost::math::tgamma(alpha + k + 1);
+    }
+    return K1*K2;
+}
+
+mp_float singleWishart_constMP(int n_min, int n_max) {
+    int n_mat = n_min + (n_min % 2);
+    mp_float alpha = 0.5*(n_max - n_min - 1);
+    // Compute constant
+    mp_float K1 = pow(pi<mp_float>(), 0.5*n_min*n_min);
+    K1 /= pow(2, mp_float(0.5*n_min*n_max))*mgamma_C(mp_float(0.5*n_max), n_min, FALSE)*mgamma_C(mp_float(0.5*n_min), n_min, FALSE);
+    mp_float K2 = pow(2, alpha*n_mat+0.5*n_mat*(n_mat+1));
+    for (int k = 0; k < n_mat; k++) {
+        K2 *= boost::math::tgamma(alpha + k + 1);
+    }
+    return K1*K2;
 }
 
 // [[Rcpp::export]]
-double singleWishart_raw(double x, int n_min, int n_max, bool mp) {
-    double result;
+NumericVector singleWishart_raw(NumericVector x, int n_min, int n_max, bool mp) {
+    int n = x.size();
+    NumericVector result(n);
     if (mp) {
-        mp_float xx(x);
-        result = singleWishart(xx, n_max, n_min).convert_to<double>();
+        mp_float constant = singleWishart_constMP(n_min, n_max);
+        mp_float value, xx;
+        for (int i = 0; i < n; i++) {
+            xx = mp_float(x[i]);
+            value = constant * singleWishart_pfaffian(xx, n_max, n_min);
+            result[i] = value.convert_to<double>();
+            Rcpp::checkUserInterrupt();
+        }
     } else {
-        result = singleWishart(x, n_max, n_min);
+        double constant = singleWishart_constDP(n_min, n_max);
+        for(int i = 0; i < n; i++) {
+            result[i] = constant * singleWishart_pfaffian(x[i], n_max, n_min);
+            Rcpp::checkUserInterrupt();
+        }
     }
 
     return result;

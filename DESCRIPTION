@@ -3,14 +3,14 @@ Title: Distribution of Largest Root for Single and Double Wishart Settings
 Version: 0.0.0.9000
 Authors@R: person("Maxime", "Turgeon",
  email = "maxime.turgeon@mail.mcgill.ca", role = c("aut", "cre"))
-Description: This package computes the distribution function of the largest root
-    statistic in both the single and double Wishart settings. This test statistic
-    is especially useful in multivariate analysis. The computations are based on
-    results by Chiani (Journal of Multivariate Statistics 2014 and 2016). They
-    use the fact that the CDF is related to the Pfaffian of a matrix that can be
-    computed in a finite number of iterations.
+Description: Functions for hypothesis testing in single and double Wishart
+    settings, based on Roy's largest root. This test statistic is especially
+    useful in multivariate analysis. The computations are based on results by
+    Chiani (Journal of Multivariate Statistics 2014 and 2016). They use the fact
+    that the CDF is related to the Pfaffian of a matrix that can be computed in
+    a finite number of iterations.
 Depends:
-    R (>= 3.0.0)
+    R (>= 3.1.0)
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true

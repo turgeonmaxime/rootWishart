@@ -21,7 +21,7 @@ typedef number<cpp_dec_float<100>> mp_float;
 
 
 template <class T>
-T doubleWishart(T xx, int s, T mm, T nn) {
+T doubleWishart_pfaffian(T xx, int s, T mm, T nn) {
     // Initialize vector
     Eigen::Matrix<T,Dynamic,1> b(s);
     int d = s + (s % 2);
@@ -31,7 +31,6 @@ T doubleWishart(T xx, int s, T mm, T nn) {
     for (int i = 0; i < d; i++) {
         A(i, i) = 0;
     }
-
     if (s != d) {
         // Fill in extra column
         for (int i = 0; i < s; i++) {
@@ -39,8 +38,6 @@ T doubleWishart(T xx, int s, T mm, T nn) {
             A(s, i) = - A(i, s);
         }
     }
-
-
     if (s != 1) {
         for (int i = 0; i < s; i++) {
             b(i) = 0.5 * pow(boost::math::beta(mm + i + 1, nn + 1, xx), 2);
@@ -51,40 +48,53 @@ T doubleWishart(T xx, int s, T mm, T nn) {
                     2*b(j+1);
                 A(j+1, i) = - A(i, j+1);
             }
+            Rcpp::checkUserInterrupt();
         }
     }
-
-
-    // Compute scaling constant
-    T C1 = 0;
-    for (int i = 1; i <= s; i++) {
-        C1 += boost::math::lgamma(0.5*(i+2*mm+2*nn+s+2)) - boost::math::lgamma(0.5*i) -
-            boost::math::lgamma(0.5*(i+2*mm+1)) - boost::math::lgamma(0.5*(i+2*nn+1));
-    }
-    T C = pow(pi<T>(), 0.5 * s) * exp(C1);
-
     T det;
     if(d > 4) {
         det = A.fullPivLu().determinant();
     } else {
         det = A.determinant();
     }
+    return sqrt(det);
+}
 
-    T result = C * sqrt(det);
-    return result;
+template <class T>
+T doubleWishart_const(int s, T mm, T nn) {
+    // Compute scaling constant
+    T C1 = 0;
+    for (int i = 1; i <= s; i++) {
+        C1 += boost::math::lgamma(0.5*(i+2*mm+2*nn+s+2)) - boost::math::lgamma(0.5*i) -
+            boost::math::lgamma(0.5*(i+2*mm+1)) - boost::math::lgamma(0.5*(i+2*nn+1));
+        Rcpp::checkUserInterrupt();
+    }
+    T C = pow(pi<T>(), 0.5 * s) * exp(C1);
+
+    return C;
 }
 
 // [[Rcpp::export]]
-double doubleWishart_raw(double x, int s, double m, double n, bool mp) {
-    double result;
+NumericVector doubleWishart_raw(NumericVector x, int s, double m, double n, bool mp) {
+    int size = x.size();
+    NumericVector result(size);
     if (mp) {
-        mp_float xx(x);
         mp_float mm(m);
         mp_float nn(n);
-
-        result = doubleWishart(xx, s, mm, nn).convert_to<double>();
+        mp_float value, xx;
+        mp_float constant = doubleWishart_const(s, mm, nn);
+        for(int i = 0; i < size; i++) {
+            xx = mp_float(x[i]);
+            value = constant * doubleWishart_pfaffian(xx, s, mm, nn);
+            result[i] = value.convert_to<double>();
+            Rcpp::checkUserInterrupt();
+        }
     } else {
-        result = doubleWishart(x, s, m, n);
+        double constant = doubleWishart_const(s, m, n);
+        for(int i = 0; i < size; i++) {
+            result[i] = constant * doubleWishart_pfaffian(x[i], s, m, n);
+            Rcpp::checkUserInterrupt();
+        }
     }
 
     return result;
