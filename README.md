@@ -5,7 +5,7 @@ R package that implements Chiani's iterative algorithms for computing the distri
 
 ## Installation
 
-You can install from GitHub using the [devtools](http://cran.r-project.org/web/packages/devtools/index.html) package:
+You can install from GitHub using the [devtools](https://cran.r-project.org/package=devtools) package:
 
 ``` r
 library(devtools)

@@ -7,12 +7,12 @@
 using namespace Rcpp;
 
 // doubleWishart_raw
-double doubleWishart_raw(double x, int s, double m, double n, bool mp);
+NumericVector doubleWishart_raw(NumericVector x, int s, double m, double n, bool mp);
 RcppExport SEXP rootWishart_doubleWishart_raw(SEXP xSEXP, SEXP sSEXP, SEXP mSEXP, SEXP nSEXP, SEXP mpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< int >::type s(sSEXP);
     Rcpp::traits::input_parameter< double >::type m(mSEXP);
     Rcpp::traits::input_parameter< double >::type n(nSEXP);
@@ -22,12 +22,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // singleWishart_raw
-double singleWishart_raw(double x, int n_min, int n_max, bool mp);
+NumericVector singleWishart_raw(NumericVector x, int n_min, int n_max, bool mp);
 RcppExport SEXP rootWishart_singleWishart_raw(SEXP xSEXP, SEXP n_minSEXP, SEXP n_maxSEXP, SEXP mpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< int >::type n_min(n_minSEXP);
     Rcpp::traits::input_parameter< int >::type n_max(n_maxSEXP);
     Rcpp::traits::input_parameter< bool >::type mp(mpSEXP);
