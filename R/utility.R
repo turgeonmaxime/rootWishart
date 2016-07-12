@@ -2,7 +2,7 @@
 #' @importFrom stats pnorm
 erf <- function(x) 2*pnorm(sqrt(2)*x) - 1
 
-# Special cases for single Wishart
+# Special cases for single Wishart----
 F22 <- function(x) {
     1 - sqrt(x*pi*0.5)*exp(-0.5*x)*erf(sqrt(0.5*x)) - exp(-x)
 }
@@ -19,3 +19,6 @@ F44 <- function(x) {
                    sqrt(pi*x)*exp(0.5*x)*(exp(x)*(x^2 - 4*x + 6) -
                                               2*x - 6)*erf(sqrt(0.5*x)))/sqrt(32)
 }
+
+# Check if we have an integer----
+isWhole <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol

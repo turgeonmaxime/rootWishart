@@ -1,6 +1,6 @@
 Package: rootWishart
 Title: Distribution of Largest Root for Single and Double Wishart Settings
-Version: 0.0.0.9000
+Version: 0.3.0
 Authors@R: person("Maxime", "Turgeon",
  email = "maxime.turgeon@mail.mcgill.ca", role = c("aut", "cre"))
 Description: Functions for hypothesis testing in single and double Wishart
@@ -8,7 +8,8 @@ Description: Functions for hypothesis testing in single and double Wishart
     useful in multivariate analysis. The computations are based on results by
     Chiani (Journal of Multivariate Statistics 2014 and 2016). They use the fact
     that the CDF is related to the Pfaffian of a matrix that can be computed in
-    a finite number of iterations.
+    a finite number of iterations. This package takes advantage of the Boost and
+    Eigen C++ libraries to perform multi-precision linear algebra.
 Depends:
     R (>= 3.1.0)
 License: GPL (>= 2)
