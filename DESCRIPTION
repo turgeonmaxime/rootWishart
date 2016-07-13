@@ -6,10 +6,11 @@ Authors@R: person("Maxime", "Turgeon",
 Description: Functions for hypothesis testing in single and double Wishart
     settings, based on Roy's largest root. This test statistic is especially
     useful in multivariate analysis. The computations are based on results by
-    Chiani (Journal of Multivariate Statistics 2014 and 2016). They use the fact
-    that the CDF is related to the Pfaffian of a matrix that can be computed in
-    a finite number of iterations. This package takes advantage of the Boost and
-    Eigen C++ libraries to perform multi-precision linear algebra.
+    Chiani (2014) <DOI:10.1016/j.jmva.2014.04.002> and Chiani (2016)
+    <DOI:10.1016/j.jmva.2015.10.007>. They use the fact that the CDF is related
+    to the Pfaffian of a matrix that can be computed in a finite number of
+    iterations. This package takes advantage of the Boost and Eigen C++ libraries
+    to perform multi-precision linear algebra.
 Depends: R (>= 3.1.0)
 License: GPL (>= 2)
 Encoding: UTF-8
@@ -18,3 +19,5 @@ NeedsCompilation: yes
 RoxygenNote: 5.0.1
 LinkingTo: Rcpp, RcppEigen, BH
 Imports: Rcpp
+URL: http://github.com/turgeonmaxime/rootWishart
+BugReports: http://github.com/turgeonmaxime/rootWishart/issues
