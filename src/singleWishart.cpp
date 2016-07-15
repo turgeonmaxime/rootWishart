@@ -19,7 +19,7 @@ template <class T>
 T mgamma_C(T, int, bool);
 
 template <class T>
-T singleWishart_pfaffian(T xx, int n_max, int n_min) {
+T singleWishart_pfaffian(T xx, int n_min, int n_max) {
     // Declare vector types with multi-precision scalar type
     typedef Eigen::Matrix<T,Dynamic,1> VectorXmp;
 
@@ -82,7 +82,7 @@ double singleWishart_constDP(int n_min, int n_max) {
     double alpha = 0.5*(n_max - n_min - 1);
     // Compute constant
     double K1 = pow(M_PI, 0.5*n_min*n_min);
-    K1 /= pow(2, 0.5*n_min*n_max)*mgamma_C(0.5*n_max, n_min, FALSE)*mgamma_C(0.5*n_min, n_min, FALSE);
+    K1 /= pow(2, 0.5*n_min*n_max)*mgamma_C(0.5*n_max, n_min, false)*mgamma_C(0.5*n_min, n_min, false);
     double K2 = pow(2, alpha*n_mat+0.5*n_mat*(n_mat+1));
     for (int k = 0; k < n_mat; k++) {
         K2 *= boost::math::tgamma(alpha + k + 1);
@@ -95,7 +95,7 @@ mp_float singleWishart_constMP(int n_min, int n_max) {
     mp_float alpha = 0.5*(n_max - n_min - 1);
     // Compute constant
     mp_float K1 = pow(pi<mp_float>(), 0.5*n_min*n_min);
-    K1 /= pow(2, mp_float(0.5*n_min*n_max))*mgamma_C(mp_float(0.5*n_max), n_min, FALSE)*mgamma_C(mp_float(0.5*n_min), n_min, FALSE);
+    K1 /= pow(2, mp_float(0.5*n_min*n_max))*mgamma_C(mp_float(0.5*n_max), n_min, false)*mgamma_C(mp_float(0.5*n_min), n_min, false);
     mp_float K2 = pow(2, alpha*n_mat+0.5*n_mat*(n_mat+1));
     for (int k = 0; k < n_mat; k++) {
         K2 *= boost::math::tgamma(alpha + k + 1);
@@ -112,14 +112,14 @@ NumericVector singleWishart_raw(NumericVector x, int n_min, int n_max, bool mp) 
         mp_float value, xx;
         for (int i = 0; i < n; i++) {
             xx = mp_float(x[i]);
-            value = constant * singleWishart_pfaffian(xx, n_max, n_min);
+            value = constant * singleWishart_pfaffian(xx, n_min, n_max);
             result[i] = value.convert_to<double>();
             Rcpp::checkUserInterrupt();
         }
     } else {
         double constant = singleWishart_constDP(n_min, n_max);
         for(int i = 0; i < n; i++) {
-            result[i] = constant * singleWishart_pfaffian(x[i], n_max, n_min);
+            result[i] = constant * singleWishart_pfaffian(x[i], n_min, n_max);
             Rcpp::checkUserInterrupt();
         }
     }

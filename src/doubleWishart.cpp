@@ -24,6 +24,7 @@ template <class T>
 T doubleWishart_pfaffian(T xx, int s, T mm, T nn) {
     // Initialize vector
     Eigen::Matrix<T,Dynamic,1> b(s);
+    Eigen::Matrix<T,Dynamic,1> tmp(s);
     int d = s + (s % 2);
 
     // Initialize matrix with zeroes on diagonal
@@ -34,17 +35,22 @@ T doubleWishart_pfaffian(T xx, int s, T mm, T nn) {
     if (s != d) {
         // Fill in extra column
         for (int i = 0; i < s; i++) {
-            A(i, s) = boost::math::beta(mm + i + 1, nn + 1, xx);
+            tmp(i) = boost::math::beta(mm + i + 1, nn + 1, xx);
+            A(i, s) = tmp(i);
             A(s, i) = - A(i, s);
+        }
+    } else {
+        for (int i = 0; i < s; i++) {
+            tmp(i) = boost::math::beta(mm + i + 1, nn + 1, xx);
         }
     }
     if (s != 1) {
         for (int i = 0; i < s; i++) {
-            b(i) = 0.5 * pow(boost::math::beta(mm + i + 1, nn + 1, xx), 2);
+            b(i) = 0.5 * tmp(i) * tmp(i);
 
             for (int j = i; j < (s-1); j++) {
                 b(j+1) = ((mm+j+1)*b(j) - boost::math::beta(2*mm+i+j+2, 2*nn+2, xx))/(mm+j+nn+2);
-                A(i,j+1) = boost::math::beta(mm+i+1, nn+1, xx) * boost::math::beta(mm+j+2, nn+1, xx) -
+                A(i,j+1) = tmp(i) * tmp(j+1) -
                     2*b(j+1);
                 A(j+1, i) = - A(i, j+1);
             }
