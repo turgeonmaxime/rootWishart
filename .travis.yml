@@ -1,15 +1,20 @@
 language: r
-r:
-  - release
-  - devel
 sudo: false
 cache: packages
 
 matrix:
   include:
     - os: linux
-      dist: trusty
+      r: release
+    - os: linux
+      r: devel
     - os: osx
+      r: release
+      dist: xcode8
+      brew_packages: valgrind
+      latex: false
+    - os: osx
+      r: devel
       dist: xcode8
       brew_packages: valgrind
       latex: false
