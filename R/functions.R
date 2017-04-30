@@ -1,28 +1,28 @@
 #' Distribution of the largest root
 #'
-#' Computes the cumulative distribution function of the largest root in the
-#' single and double Wishart setting.
+#' Computes the cumulative distribution function of the largest root in the single and double
+#' Wishart setting.
 #'
-#' If \eqn{S} follows a Wishart(\eqn{p,n}) distribution, e.g. if we can write
-#' \deqn{S = X^TX,} where \eqn{X} is an \eqn{n x p} matrix with i.i.d rows
-#' coming from a \eqn{p}-variate standard normal, then \code{singleWishart}
-#' gives the distribution of the largest root of \eqn{S}.
+#' If \eqn{S} follows a Wishart(\eqn{p,n}) distribution, e.g. if we can write \deqn{S = X^TX,} where
+#' \eqn{X} is an \eqn{n x p} matrix with i.i.d rows coming from a \eqn{p}-variate standard normal,
+#' then \code{singleWishart} gives the distribution of the largest root of \eqn{S}.
 #'
-#' As its name indicates, the double Wishart setting involves two Wishart
-#' variables: let \eqn{A} and \eqn{B} be Wishart(\eqn{p,m}) and
-#' Wishart(\eqn{p,n}), respectively. If \eqn{A+B} is invertible, then
-#' \code{doubleWishart} gives the distribution of the largest root of
-#' \deqn{(A+B)^-1B.} Alternatively, it gives the distribution of the largest
-#' root of the determinental equation \deqn{det(B - \theta(A+B)).}
+#' As its name indicates, the double Wishart setting involves two Wishart variables: let \eqn{A} and
+#' \eqn{B} be Wishart(\eqn{p,m}) and Wishart(\eqn{p,n}), respectively. If \eqn{A+B} is invertible,
+#' then \code{doubleWishart} gives the distribution of the largest root of \deqn{(A+B)^-1B.}
+#' Alternatively, it gives the distribution of the largest root of the determinental equation
+#' \deqn{det(B - \theta(A+B)).}
 #'
 #' @param x Vector of numeric values at which to compute the CDF.
-#' @param p,n,m Parameters of the single and double Wishart settings. See
-#'   details.
+#' @param p,n,m Parameters of the single and double Wishart settings. See details.
 #' @param mprec Logical. Should we perform high precision computations?
+#' @param type Character string. Select \code{type = "multi"} for multiprecision; select \code{type
+#'   = "double"} for double precision. Defaults to adaptive selection of the precision type based
+#'   on the input parameters.
 #' @return Returns the value of the CDF at \code{x}.
 #' @examples
 #' x1 <- seq(0, 30, length.out = 50)
-#' y1 <- singleWishart(x1, 5, 10, mprec = FALSE)
+#' y1 <- singleWishart(x1, p = 5, n = 10)
 #' plot(x1, y1, type='l')
 #'
 #' x2 <- seq(0, 1, length.out = 50)
@@ -31,12 +31,30 @@
 #' @export
 #' @aliases doubleWishart singleWishart
 #' @rdname largestRoot
-singleWishart <- function(x, p, n, mprec = TRUE) {
+singleWishart <- function(x, p, n, type) {
     # Check input
     stopifnot(all(x >= 0), p > 0, n > 0, isWhole(p), isWhole(n))
 
     n_min <- min(p, n)
     n_max <- max(p, n)
+
+    if (missing(type)) {
+        mprec <- precSingleWishart_bool(n_min, n_max)
+        if (mprec) {
+            message("Using multiprecision")
+        } else {
+            message("Using double precision")
+        }
+    } else {
+        mprec <- break(type,
+                       "multiple" = TRUE,
+                       "double" = FALSE,
+                       NULL)
+    }
+
+    if (is.null(mprec)) {
+        stop("Invalid value for argument \"type\"")
+    }
 
     if (mprec) {
         result <- singleWishart_raw(x, n_min, n_max, mprec)
@@ -46,7 +64,7 @@ singleWishart <- function(x, p, n, mprec = TRUE) {
                              c(2,5),
                              c(3,3),
                              c(4,4))
-        if(any(vapply(specialCases,
+        if (any(vapply(specialCases,
                       function(pair) all(pair == c(n_min, n_max)),
                       logical(1)))) {
             if (all(c(n_min, n_max) == c(2,2))) result <- F22(x)
