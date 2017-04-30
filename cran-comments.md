@@ -1,12 +1,9 @@
-## Resubmission
-This is a resubmission. In this version I have:
-
-* Fixed the citations in the Description field of DESCRIPTION. I have changed them to Author (Year) format, and I have added the DOIs.
-
 ## Test environments
-* local ubuntu 14.04, R 3.3.1
-* ubuntu 14.04 (on travis-ci), R 3.3.1
+* local ubuntu 16.10, R 3.4.0
+* ubuntu 12.04 (on travis-ci), (devel and release)
+* OS X 10.11 (on travis-ci), (devel and release)
 * win-builder (devel and release)
+* Windows Server 2012 (on AppVeyor), (devel and release)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
