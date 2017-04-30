@@ -11,7 +11,7 @@ F25 <- function(x) {
 }
 F33 <- function(x) {
     exp(-1.5*x)*(exp(0.5*x) * (exp(x) - x - 1) * erf(sqrt(0.5*x)) -
-                     sqrt(2*x/pi)*(exp(x)*(x-1) + 1))
+                     sqrt(2*x/pi)*(exp(x)*(x - 1) + 1))
 }
 F44 <- function(x) {
     exp(-2*x)*(sqrt(2)*(4*exp(2*x) -
@@ -22,3 +22,24 @@ F44 <- function(x) {
 
 # Check if we have an integer----
 isWhole <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
+
+# Adaptive selection of precision type----
+precSingleWishart_bool <- function(n_min, n_max) {
+    multiPrec <- FALSE
+
+    if (n_max > 17) multiPrec <- TRUE else {
+        if (n_min >= 15) multiPrec <- TRUE
+        if (n_min == 14 & (n_max %in% 15:16)) multiPrec <- TRUE
+
+    }
+    return(multiPrec)
+}
+
+precDoubleWishart_bool <- function(p, n, m) {
+    multiPrec <- FALSE
+
+    if (p > 12 || m > 250 || n > 40) multiPrec <- TRUE
+    if (abs(p - n) > 2) multiPrec <- TRUE
+
+    return(multiPrec)
+}

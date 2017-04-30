@@ -1,5 +1,5 @@
 # rootWishart
-[![Build Status](https://travis-ci.org/turgeonmaxime/rootWishart.svg?branch=master)](https://travis-ci.org/turgeonmaxime/rootWishart) [![CRAN](http://www.r-pkg.org/badges/version/rootWishart?color=blue)](http://cran.rstudio.com/package=rootWishart) [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/rootWishart?color=green)](http://www.r-pkg.org/pkg/rootWishart)
+[![Build Status](https://travis-ci.org/turgeonmaxime/rootWishart.svg?branch=master)](https://travis-ci.org/turgeonmaxime/rootWishart) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/turgeonmaxime/rootWishart?branch=master&svg=true)](https://ci.appveyor.com/project/turgeonmaxime/rootWishart) [![CRAN](http://www.r-pkg.org/badges/version/rootWishart?color=blue)](http://cran.rstudio.com/package=rootWishart) [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/rootWishart?color=green)](http://www.r-pkg.org/pkg/rootWishart)
 
 R package that implements Chiani's iterative algorithms for computing the distribution of the largest root in single and double Wishart settings.
 
