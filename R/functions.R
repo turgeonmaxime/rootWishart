@@ -78,6 +78,6 @@ doubleWishart <- function(x, p, n, m, mprec = TRUE) {
     doubleWishart_raw(x, sC, mC, nC, mprec)
 }
 
-#' @useDynLib rootWishart
+#' @useDynLib rootWishart, .registration=TRUE
 #' @importFrom Rcpp sourceCpp
 NULL

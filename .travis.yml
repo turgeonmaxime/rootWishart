@@ -1,5 +1,9 @@
 language: r
-sudo: required
+r:
+  - release
+  - devel
+sudo: false
+cache: packages
 
 matrix:
   include:
@@ -17,7 +21,7 @@ addons:
 
 r_check_args: '--use-valgrind'
 
-r_binary_packages:
+r_packages:
   - Rcpp
   - RcppEigen
   - BH
