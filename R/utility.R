@@ -34,3 +34,12 @@ precSingleWishart_bool <- function(n_min, n_max) {
     }
     return(multiPrec)
 }
+
+precDoubleWishart_bool <- function(p, n, m) {
+    multiPrec <- FALSE
+
+    if (p > 12 || m > 250 || n > 40) multiPrec <- TRUE
+    if (abs(p - n) > 2) multiPrec <- TRUE
+
+    return(multiPrec)
+}

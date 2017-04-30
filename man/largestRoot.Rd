@@ -8,17 +8,16 @@
 \usage{
 singleWishart(x, p, n, type)
 
-doubleWishart(x, p, n, m, mprec = TRUE)
+doubleWishart(x, p, n, m, type)
 }
 \arguments{
 \item{x}{Vector of numeric values at which to compute the CDF.}
 
 \item{p, n, m}{Parameters of the single and double Wishart settings. See details.}
 
-\item{type}{Character string. Select \code{type = "multi"} for multiprecision; select \code{type = "double"} for double
-precision. Defaults to adapative selection of the precision type based on the input parameters.}
-
-\item{mprec}{Logical. Should we perform high precision computations?}
+\item{type}{Character string. Select \code{type = "multi"} for multiprecision; select \code{type
+= "double"} for double precision. Defaults to adaptive selection of the precision type based
+on the input parameters.}
 }
 \value{
 Returns the value of the CDF at \code{x}.
@@ -40,10 +39,10 @@ Alternatively, it gives the distribution of the largest root of the determinenta
 }
 \examples{
 x1 <- seq(0, 30, length.out = 50)
-y1 <- singleWishart(x1, 5, 10, mprec = FALSE)
+y1 <- singleWishart(x1, p = 5, n = 10)
 plot(x1, y1, type='l')
 
 x2 <- seq(0, 1, length.out = 50)
-y2 <- doubleWishart(x2, 10, 10, 200, mprec = FALSE)
+y2 <- doubleWishart(x2, p = 10, n = 10, m = 200)
 plot(x2, y2, type='l')
 }
