@@ -1,3 +1,7 @@
+## Resubmission
+* This is a resubmission.
+ - I've changed CRAN.R-project.org URLs to their canonical forms
+
 ## Test environments
 * local ubuntu 16.10, R 3.4.0
 * ubuntu 12.04 (on travis-ci), (devel and release)
