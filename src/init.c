@@ -8,12 +8,12 @@
  */
 
 /* .Call calls */
-extern SEXP rootWishart_doubleWishart_raw(SEXP, SEXP, SEXP, SEXP, SEXP);
-extern SEXP rootWishart_singleWishart_raw(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _rootWishart_doubleWishart_raw(SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _rootWishart_singleWishart_raw(SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"rootWishart_doubleWishart_raw", (DL_FUNC) &rootWishart_doubleWishart_raw, 5},
-    {"rootWishart_singleWishart_raw", (DL_FUNC) &rootWishart_singleWishart_raw, 4},
+    {"_rootWishart_doubleWishart_raw", (DL_FUNC) &_rootWishart_doubleWishart_raw, 5},
+    {"_rootWishart_singleWishart_raw", (DL_FUNC) &_rootWishart_singleWishart_raw, 4},
     {NULL, NULL, 0}
 };
 

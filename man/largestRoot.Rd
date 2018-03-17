@@ -6,9 +6,9 @@
 \alias{doubleWishart}
 \title{Distribution of the largest root}
 \usage{
-singleWishart(x, p, n, type)
+singleWishart(x, p, n, type = c("double", "multiple"))
 
-doubleWishart(x, p, n, m, type)
+doubleWishart(x, p, n, m, type = c("double", "multiple"))
 }
 \arguments{
 \item{x}{Vector of numeric values at which to compute the CDF.}

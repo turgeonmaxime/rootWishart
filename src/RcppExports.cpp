@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // doubleWishart_raw
 NumericVector doubleWishart_raw(NumericVector x, int s, double m, double n, bool mp);
-RcppExport SEXP rootWishart_doubleWishart_raw(SEXP xSEXP, SEXP sSEXP, SEXP mSEXP, SEXP nSEXP, SEXP mpSEXP) {
+RcppExport SEXP _rootWishart_doubleWishart_raw(SEXP xSEXP, SEXP sSEXP, SEXP mSEXP, SEXP nSEXP, SEXP mpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -23,7 +23,7 @@ END_RCPP
 }
 // singleWishart_raw
 NumericVector singleWishart_raw(NumericVector x, int n_min, int n_max, bool mp);
-RcppExport SEXP rootWishart_singleWishart_raw(SEXP xSEXP, SEXP n_minSEXP, SEXP n_maxSEXP, SEXP mpSEXP) {
+RcppExport SEXP _rootWishart_singleWishart_raw(SEXP xSEXP, SEXP n_minSEXP, SEXP n_maxSEXP, SEXP mpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;

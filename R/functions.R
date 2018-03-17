@@ -30,7 +30,7 @@
 #' @export
 #' @aliases doubleWishart singleWishart
 #' @rdname largestRoot
-singleWishart <- function(x, p, n, type) {
+singleWishart <- function(x, p, n, type = c("double", "multiple")) {
     # Check input
     stopifnot(all(x >= 0), p > 0, n > 0, isWhole(p), isWhole(n))
 
@@ -45,10 +45,10 @@ singleWishart <- function(x, p, n, type) {
             message("Using double precision")
         }
     } else {
-        mprec <- break(type,
-                       "multiple" = TRUE,
-                       "double" = FALSE,
-                       NULL)
+        mprec <- switch(type,
+                        "multiple" = TRUE,
+                        "double" = FALSE,
+                        NULL)
     }
     if (is.null(mprec)) {
         stop("Invalid value for argument \"type\"")
@@ -79,7 +79,7 @@ singleWishart <- function(x, p, n, type) {
 
 #' @export
 #' @rdname largestRoot
-doubleWishart <- function(x, p, n, m, type) {
+doubleWishart <- function(x, p, n, m, type = c("double", "multiple")) {
     # Check input
     stopifnot(all(x >= 0), all(x <= 1),
               p > 0, isWhole(p),
@@ -94,10 +94,10 @@ doubleWishart <- function(x, p, n, m, type) {
             message("Using double precision")
         }
     } else {
-        mprec <- break(type,
-                       "multiple" = TRUE,
-                       "double" = FALSE,
-                       NULL)
+        mprec <- switch(type,
+                        "multiple" = TRUE,
+                        "double" = FALSE,
+                        NULL)
     }
     if (is.null(mprec)) {
         stop("Invalid value for argument \"type\"")
