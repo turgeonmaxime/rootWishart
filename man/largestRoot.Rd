@@ -3,46 +3,51 @@
 \name{singleWishart}
 \alias{singleWishart}
 \alias{doubleWishart}
-\alias{doubleWishart}
 \title{Distribution of the largest root}
 \usage{
-singleWishart(x, p, n, type = c("double", "multiple"))
+singleWishart(x, p, n, type, verbose = TRUE)
 
-doubleWishart(x, p, n, m, type = c("double", "multiple"))
+doubleWishart(x, p, n, m, type, verbose = TRUE)
 }
 \arguments{
 \item{x}{Vector of numeric values at which to compute the CDF.}
 
 \item{p, n, m}{Parameters of the single and double Wishart settings. See details.}
 
-\item{type}{Character string. Select \code{type = "multi"} for multiprecision; select \code{type
-= "double"} for double precision. Defaults to adaptive selection of the precision type based
+\item{type}{Character string. Select \code{type = "arbitrary"} for
+arbitrary precision; select \code{type = "fixed"} for fixed precision.
+Defaults to adaptive selection of the precision type based
 on the input parameters.}
+
+\item{verbose}{Logical. If \code{TRUE} (default), a message is printed describing which
+precision type was selected by the adaptive algorithm.}
 }
 \value{
-Returns the value of the CDF at \code{x}.
+Returns the value of the CDF at \code{x}. An attribute also records
+  the type of precision use for the computation.
 }
 \description{
 Computes the cumulative distribution function of the largest root in the single and double
 Wishart setting.
 }
 \details{
-If \eqn{S} follows a Wishart(\eqn{p,n}) distribution, e.g. if we can write \deqn{S = X^TX,} where
-\eqn{X} is an \eqn{n x p} matrix with i.i.d rows coming from a \eqn{p}-variate standard normal,
-then \code{singleWishart} gives the distribution of the largest root of \eqn{S}.
+If \eqn{S} follows a Wishart(\eqn{p,n}) distribution, e.g. if we can write
+\deqn{S = X^TX,} where \eqn{X} is an \eqn{n x p} matrix with i.i.d rows coming
+from a \eqn{p}-variate standard normal, then \code{singleWishart} gives the
+distribution of the largest root of \eqn{S} (i.e. its largest eigenvalue.
 
-As its name indicates, the double Wishart setting involves two Wishart variables: let \eqn{A} and
-\eqn{B} be Wishart(\eqn{p,m}) and Wishart(\eqn{p,n}), respectively. If \eqn{A+B} is invertible,
-then \code{doubleWishart} gives the distribution of the largest root of \deqn{(A+B)^-1B.}
-Alternatively, it gives the distribution of the largest root of the determinental equation
-\deqn{det(B - \theta(A+B)).}
+As its name indicates, the double Wishart setting involves two Wishart variables:
+let \eqn{A} and \eqn{B} be Wishart(\eqn{p,m}) and Wishart(\eqn{p,n}), respectively.
+If \eqn{A+B} is invertible, then \code{doubleWishart} gives the distribution of
+the largest root of \deqn{(A+B)^-1B}. Alternatively, it gives the distribution
+of the largest root of the determinantal equation \deqn{det(B - \theta(A+B))}.
 }
 \examples{
 x1 <- seq(0, 30, length.out = 50)
 y1 <- singleWishart(x1, p = 5, n = 10)
-plot(x1, y1, type='l')
+plot(x1, y1, type = 'l')
 
 x2 <- seq(0, 1, length.out = 50)
 y2 <- doubleWishart(x2, p = 10, n = 10, m = 200)
-plot(x2, y2, type='l')
+plot(x2, y2, type = 'l')
 }

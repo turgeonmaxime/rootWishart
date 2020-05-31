@@ -13,7 +13,7 @@ using namespace Rcpp;
 using namespace Eigen;
 using boost::math::constants::pi;
 
-typedef number<cpp_dec_float<100>> mp_float;
+typedef number<cpp_dec_float<16>> mp_float;
 
 // Declare matrix and vector types with multi-precision scalar type
 // typedef Eigen::Matrix<mp_float,Dynamic,Dynamic>  MatrixXmp;
