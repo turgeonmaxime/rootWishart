@@ -21,4 +21,4 @@ LinkingTo: Rcpp, RcppEigen, BH
 Imports: Rcpp
 URL: http://github.com/turgeonmaxime/rootWishart
 BugReports: http://github.com/turgeonmaxime/rootWishart/issues
-Suggests: testthat
+Suggests: tinytest
