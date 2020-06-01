@@ -10,14 +10,14 @@ matrix:
       r: devel
     - os: osx
       r: release
-      dist: xcode8
+      # dist: xcode8
       brew_packages: valgrind
       latex: false
-    - os: osx
-      r: devel
-      dist: xcode8
-      brew_packages: valgrind
-      latex: false
+    # - os: osx
+    #   r: devel
+    #   dist: xcode8
+    #   brew_packages: valgrind
+    #   latex: false
 
 addons:
   apt:

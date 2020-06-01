@@ -1,6 +1,6 @@
 Package: rootWishart
 Title: Distribution of Largest Root for Single and Double Wishart Settings
-Version: 0.4.1
+Version: 0.5.0
 Authors@R: person("Maxime", "Turgeon",
  email = "max.turgeon@umanitoba.ca", role = c("aut", "cre"))
 Description: Functions for hypothesis testing in single and double Wishart

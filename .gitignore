@@ -6,3 +6,4 @@ singularRoot/*
 *.o
 *.so
 *.dll
+*.Rcheck/
