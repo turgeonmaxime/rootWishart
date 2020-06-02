@@ -16,7 +16,7 @@ using boost::math::constants::pi;
 typedef number<cpp_dec_float<16>> mp_float;
 
 template <class T>
-T mgamma_C(const T&, int, bool);
+T mgamma_C(T, int, bool);
 
 template <class T>
 T singleWishart_pfaffian(T xx, int n_min, int n_max) {
@@ -133,7 +133,7 @@ NumericVector singleWishart_raw(NumericVector x, int n_min, int n_max, bool mp) 
 // m: dimension
 // logar: whether to evaluate on logarithmic scale
 template <class T>
-T mgamma_C(const T& x, int m, bool logar) {
+T mgamma_C(T x, int m, bool logar) {
     T res;
     if (logar) {
         res = 0.25*m*(m-1) * log(pi<T>());
