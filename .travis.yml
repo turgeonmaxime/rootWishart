@@ -25,6 +25,8 @@ addons:
     - valgrind
 
 r_check_args: '--use-valgrind'
+env:
+  - VALGRIND_OPTS='--leak-check=full --track-origins=yes'
 
 r_packages:
   - Rcpp
